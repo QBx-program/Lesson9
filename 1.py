@@ -1,4 +1,4 @@
-class TrafficLight():
+class TrafficLight:
     __color = [['красный', 7], ['желтый', 2], ['зеленый', 5]]
 
     def running(self):
