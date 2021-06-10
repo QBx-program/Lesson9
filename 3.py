@@ -1,52 +1,47 @@
-class Worker:
-    __Worker_count = 0
+class Work:
+    __Work_count = 0
 
-    def __init__(self, name, surname, position, wage, bonus):
-        self.name = name
-        self.surname = surname
-        self.position = position
-        self.cash = {'wage': 0, 'bonus': 0}
-        self.cash['wage'] = wage
-        self.cash['bonus'] = bonus
-        self._incom = self.cash['wage'] + self.cash['bonus']
-        self.__Worker_count += 1
+    def __init__(self, *args, **kwargs):
+        if args:
+            self.name = args[0]
+            self.surname = args[1]
+            self.position = args[2]
+        if kwargs:
+            self._incom = kwargs['wage'] + kwargs['bonus']
+        Work.__Work_count += 1
 
-    def show_worker(self):
-        print(f'{self.name} {self.surname} - {self.position}: {self._incom}')
+    def show_work(self):
+        print(self.name, self.surname, self.position, self._incom)
 
-
-class Position(Worker):
+class Position(Work):
     __Position_count = 0
 
-    def __init__(self, name, surname, position, wage, bonus):
-        super().__init__(name, surname, position, wage, bonus)
-        self.position = position
-        self.wage = wage
-        self.bonus = bonus
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.posit = args[2]
+        self.wage = kwargs['wage']
+        self.bonus = kwargs['bonus']
         Position.__Position_count += 1
 
-    def get_fullname(self):
-        return f'{self.surname} {self.name}'
+    def get_full_name(self):
+        print(self.surname, self.name)
 
-    def income(self):
-        return self._incom
+    def get_total_income(self):
+        print(self._incom)
 
+    def wage_bonus(self):
+        print(f'wage: {self.wage}, bonus: {self.bonus}')
 
-p1 = Position('Ivan', 'Ivanov', 'CEO', 150000, 50000)
-p2 = Position('Petr', 'Petrov', 'CCO', 100000, 20000)
-p3 = Position('Ignat', 'Ignatov', 'Manager', 50000, 10000)
+p = Work('Ivan', 'Ivanov', 'CEO', **{'wage': 150000, 'bonus': 50000})
+p.show_work()
 
-print(p1.get_fullname())
-print(p1.income())
-print(p1.position)
-print(p2.get_fullname())
-print(p2.income())
-print(p2.position)
-print(p3.get_fullname())
-print(p3.income())
-print(p3.position)
+p1 = Position('Petr', 'Petrov', 'CCO', **{'wage': 100000, 'bonus': 20000})
+p1.get_full_name()
+p1.get_total_income()
+p1.wage_bonus()
 
-print(Worker.show_worker(p1))
-print(Worker.show_worker(p2))
-print(Worker.show_worker(p3))
+p3 = Position('Ignat', 'Ignatov', 'Manager', **{'wage': 50000, 'bonus': 10000})
+p3.get_full_name()
+p3.get_total_income()
+p3.wage_bonus()
 
